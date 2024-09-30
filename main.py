@@ -21,10 +21,14 @@ text = extract_text("cvs/CV-DESARROLLADOR.pdf")
 llm = input.llm()
 
 
-#applicant_profile = llm.invoke(input.input_data(text))
+applicant_profile = llm.invoke(input.input_data(text))
+applicant_profile = json.loads(applicant_profile)
+
+print("Applicant profile:")
+print(applicant_profile)
 
 # this line is used to test with mocked data so that not to wait for the llm response
-applicant_profile = MOCK_CV_EXTRACTED_DATA
+#applicant_profile = MOCK_CV_EXTRACTED_DATA
 
 # Convert the applicant's profile into a single text input
 applicant_query = f"""
@@ -66,6 +70,9 @@ inputs = {
 
 # Run the chain and get the structured response
 comparison_result = chain.run(inputs)
+
+print("Comparison result:")
+print(comparison_result)
 
 # From a json string to a list of iterable maps with the data from the llm
 comparison_result = json.loads(comparison_result)
