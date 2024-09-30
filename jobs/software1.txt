@@ -1,0 +1,22 @@
+Software Engineer (Backend Development)
+Location: Hybrid (New York, NY)
+Job Type: Full-time
+
+Responsibilities:
+
+Design, develop, and maintain scalable backend services and APIs.
+Collaborate with cross-functional teams to define, design, and ship new features.
+Optimize performance, improve scalability, and ensure system reliability.
+Conduct code reviews and mentor junior developers.
+Implement security and data protection measures in all systems.
+Requirements:
+
+3+ years of experience in backend development.
+Strong knowledge of languages like Python, Java, or Go.
+Experience with cloud platforms (AWS, GCP, or Azure).
+Proficiency with relational databases (PostgreSQL, MySQL) and NoSQL databases.
+Familiarity with microservices architecture and RESTful APIs.
+Nice to Have:
+
+Experience with containerization (Docker/Kubernetes).
+Familiarity with CI/CD pipelines.

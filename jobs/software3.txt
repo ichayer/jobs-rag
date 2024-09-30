@@ -1,0 +1,22 @@
+Software Engineer (Machine Learning Focus)
+Location: On-site (Austin, TX)
+Job Type: Full-time
+
+Responsibilities:
+
+Develop machine learning models to improve business processes and user experience.
+Collaborate with data scientists to integrate AI/ML solutions into existing software.
+Build and maintain pipelines for data processing and model training.
+Ensure scalability and performance of deployed machine learning models.
+Write clean, maintainable, and efficient code.
+Requirements:
+
+Strong understanding of machine learning algorithms and techniques.
+Experience with Python and ML libraries such as TensorFlow, PyTorch, or scikit-learn.
+Familiarity with cloud-based ML platforms (AWS SageMaker, GCP AI).
+Solid knowledge of software engineering practices (e.g., version control, testing).
+Bachelor's degree in Computer Science or a related field.
+Nice to Have:
+
+Experience with MLOps practices.
+Background in data engineering or analytics.
