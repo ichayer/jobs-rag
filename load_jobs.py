@@ -30,3 +30,5 @@ if __name__ == "__main__":
 
     job_descriptions = document_loader.load_job_descriptions()
     vector_store.add_documents(job_descriptions)
+
+    print("Done!")
