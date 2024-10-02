@@ -11,7 +11,7 @@ from metrics.scores import sort_jobs_by_score
 
 
 if __name__ == "__main__":
-    if sys.version_info > (3, 10):
+    if sys.version_info > (3, 10, 99):
         raise Exception("This code is not compatible with version of Python higher than 3.10")
 
     load_dotenv(find_dotenv())
