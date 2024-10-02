@@ -52,7 +52,7 @@ if __name__ == "__main__":
     comparison_result = llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=search_results)
 
     # Sort and display results
-    sorted_jobs = sort_jobs_by_score(jobs=json.loads(comparison_result))
+    sorted_jobs = sort_jobs_by_score(jobs=comparison_result)
     best_match = sorted_jobs[0]
 
     print(f"Recommended job source: {best_match['source']} with a final score of {best_match['final_score']:.2f}")

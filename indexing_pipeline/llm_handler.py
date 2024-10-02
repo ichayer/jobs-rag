@@ -1,7 +1,9 @@
-import json
 from langchain.chains.llm import LLMChain
 from langchain_community.llms.ollama import Ollama
 from langchain_core.prompts import PromptTemplate
+
+from utils.decorators import llm_chain_retry
+
 
 # NICE: Perhaps implement a Singleton pattern for the LLMHandler class
 class LLMHandler:
@@ -90,6 +92,11 @@ class LLMHandler:
             ]
         }}"""
 
+    @llm_chain_retry(max_retries=7)
+    def extract_data(self, text):
+        prompt = self.create_prompt(text)
+        return self.llm.invoke(prompt)
+
     def __cut_off_json_excess(self, text):
         start1 = text.find('{')
         start2 = text.find('[')
@@ -112,19 +119,6 @@ class LLMHandler:
             text = text[start:]
 
         return text
-
-    # Sometimes the LLM model is not able to output correctly a JSON string
-    def extract_data(self, text, max_retries=7):
-        prompt = self.create_prompt(text)
-        for attempt in range(max_retries):
-            try:
-                output = self.llm.invoke(prompt)
-                output = self.__cut_off_json_excess(output)
-                return json.loads(output)
-            except json.JSONDecodeError as e:
-                if attempt < max_retries - 1:
-                    print(f"Attempt {attempt + 1}/{max_retries}: Failed to decode JSON. LLM output JSON is malformed.")
-        raise ValueError(f"Failed to decode JSON after {max_retries} attempts. LLM output JSON is malformed.")
 
     def prepare_query(self, applicant_profile):
         return f"""
@@ -153,6 +147,7 @@ class LLMHandler:
         Be precise and sure to follow JSON syntax and structure correctly.
         """
 
+    @llm_chain_retry(max_retries=7)
     def compare_applicant_with_jobs(self, applicant_profile, job_descriptions_text):
         prompt = PromptTemplate(input_variables=["address", "city", "professional_experience", "education", "skills", "job_description"],
                                 template=self.MATCH_APPLICATION_WITH_JOB_PROMPT)
