@@ -11,11 +11,17 @@ class LLMHandler:
     You are given the following applicant profile and job description. 
     For each job description, I want you to:
 
-    1. Count how many skills from the applicant's profile match the skills required in the job description.
-    2. Count how many required skills are missing in the applicant's profile.
+    1. Count how many skills from the applicant's profile match the skills required in each job description.
+    2. Count how many required skills are missing in the applicant's profile for each job description.
     3. Check the applicant's previous jobs and count how many are relevant for the applied position.
     4. Check the applicant's education and count how many degrees match the job's education requirements.
-    5. Rate the location match from 0 to 5, where 0 means the location is too far away, and 4 means the applicant is in the same zone or can easily commute. 5 means the job is fully remote. If the job is hybrid or fully on site use the scale 1 to 4
+    5. Rate the location match from 0 to 4, where:
+        - 0 means the job location is more than 3 hours away from the applicant location
+        - 1 means the job location is between 3 and 1 hours away from the applicant location
+        - 2 means the job location is less 1 hour away from the applicant location
+        - 3 means the job is in the same location as the applicant location
+        - 4 means the job is fully remote. 
+        - If the job is hybrid or fully on site use the scale 1 to 3
     6. Retrieve de source of the job description so that it is identifiable. 
 
     Return the result in JSON format with the following fields:
@@ -33,10 +39,13 @@ class LLMHandler:
     Skills: {skills}
     Education: {education}
 
-    Job Description:
+    Jobs Descriptions:
     {job_description}
+    
+    You should analyze as many jobs as the number of times that page_content appears in the description.
 
-    Just answer with a list of JSON files of the provided format and nothing else. No more extra text nor explanation, the output is aimed to be parsed as a valid json
+    Just answer with a list of JSON files of the provided format and nothing else. No more extra text nor explanation, 
+    the output is aimed to be parsed as a valid json
 
     Example of a valid answer:
 

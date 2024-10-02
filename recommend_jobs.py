@@ -28,7 +28,7 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
 
     # Load the CV text
-    text = extract_text("cvs/CV-DESARROLLADOR.pdf")
+    text = extract_text("cvs/junior-full-stack-developer-resume-example.pdf")
 
     # Initialize LLM Handler
     llm_handler = LLMHandler()
@@ -48,11 +48,8 @@ if __name__ == "__main__":
     print("Search results:")
     print(search_results)
 
-    # Combine job descriptions for prompt
-    job_descriptions_text = "\n\n".join([f"Source: {result.metadata['source']}\nText: {result.page_content}" for result in search_results])
-
     # Prepare inputs for comparison
-    comparison_result = llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=job_descriptions_text)
+    comparison_result = llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=search_results)
 
     # Sort and display results
     sorted_jobs = sort_jobs_by_score(jobs=json.loads(comparison_result))
