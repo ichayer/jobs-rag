@@ -14,7 +14,7 @@ class VectorDatabase:
     def __get_vector_store(self):
         embeddings = HuggingFaceEmbeddings(
             model_name='sentence-transformers/all-MiniLM-L6-v2',
-            model_kwargs={'device': 'cpu'}
+            model_kwargs={'device': os.environ["COMPUTE_DEVICE"]}
         )
         pc = Pinecone(api_key=self.pinecone_api_key)
 
