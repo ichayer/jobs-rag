@@ -1,0 +1,27 @@
+Job Title: Senior Front-End Developer
+Location: Hybrid (Brooklyn, NY)
+Job Type: Full-time
+
+Responsibilities:
+
+Lead and mentor a team of front-end developers to design, develop, and maintain scalable, high-performance web applications.
+Collaborate with cross-functional teams, including project managers, to ensure timely project delivery.
+Implement and optimize front-end components using modern libraries and frameworks like React, Angular, and Vue.js.
+Maintain and improve company documentation for front-end development tools and frameworks.
+Create responsive, SEO-optimized web pages that adhere to accessibility standards.
+Conduct code reviews, promote best practices, and ensure the quality of deployed code.
+Implement cloud infrastructure strategies using AWS to enhance development and deployment efficiency.
+Drive continuous improvement through coaching, code reviews, and implementing efficient workflows (e.g., Kanban, Agile).
+Requirements:
+
+5+ years of experience in front-end development.
+Proficiency in HTML, CSS, JavaScript, and modern front-end frameworks like React, Angular, and Vue.js.
+Experience with cloud platforms (AWS, GCP, or Azure) and Git for version control.
+Proven track record of creating responsive, SEO-compliant web applications.
+Strong understanding of front-end testing tools like Enzyme and Jest.
+Experience working with cross-functional teams, project management tools, and methodologies such as Agile/Kanban.
+Nice to Have:
+
+Experience with MaterialUI or similar component libraries.
+Strong documentation skills for internal tools and frameworks.
+Familiarity with CI/CD pipelines for efficient deployment.
