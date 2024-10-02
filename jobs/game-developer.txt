@@ -1,0 +1,27 @@
+Job Title: Software Engineer (Game Development)
+Location: Hybrid (Buenos Aires, Argentina)
+Job Type: Full-time
+
+Responsibilities:
+
+Develop and maintain applications using C#, .NET, and various frameworks including Xamarin, Web APIs, and OpenGL.
+Work on game development projects using Unity, Unreal Engine, and XNA/MonoGame, ensuring high-quality gameplay and graphics.
+Collaborate on cross-functional teams, providing technical solutions for web, mobile, and game development.
+Create, maintain, and contribute to open-source libraries such as Silk.NET and TrippyGL, enhancing community-driven projects.
+Build and optimize databases (PostgreSQL, MongoDB) to support scalable, high-performance applications.
+Work with image and video editing tools (Blender, Paint.NET) for multimedia content creation and integration into software projects.
+Participate in entrepreneurial and leadership activities, including organizing international events (SABF) and pitching innovative ideas.
+Requirements:
+
+3+ years of experience in software development with a focus on C#, .NET, and related technologies.
+Proficiency in game development using Unity, Unreal Engine, and graphics libraries like OpenGL.
+Strong knowledge of Python (numpy, matplotlib, Django) and Java (Spring, Jersey, Hibernate/JDBC).
+Familiarity with both relational (PostgreSQL) and NoSQL (MongoDB) databases.
+Experience contributing to and maintaining open-source projects.
+Excellent problem-solving skills, with a fast learning curve and adaptability to new technologies.
+Nice to Have:
+
+Experience with drone piloting and intermediate knowledge of drone technologies.
+Leadership and mentorship experience, particularly in youth programs or educational settings.
+Familiarity with entrepreneurship, innovation, and leadership development.
+Certifications or experience in first aid (Maguen David Adom) and hands-on experience in manual assembly lines.

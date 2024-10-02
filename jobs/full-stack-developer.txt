@@ -1,0 +1,25 @@
+Job Title: Full Stack Developer
+Location: Hybrid (Boston, MA)
+Job Type: Full-time
+
+Responsibilities:
+
+Develop and maintain full-stack applications using JavaScript, Node.js, Angular, and Python.
+Collaborate with cross-functional teams to deliver high-performance, scalable web applications.
+Optimize application performance and improve user experience through database management (MySQL) and serverless technologies (AWS API Gateway).
+Implement continuous integration and continuous delivery (CI/CD) pipelines using tools like Git, Docker, and SonarQube to ensure smooth deployments and high code quality.
+Troubleshoot and resolve bugs, enhancing system performance and reducing operational costs.
+Contribute to the development and integration of reusable components to streamline processes and improve development efficiency.
+Requirements:
+
+3+ years of experience in full-stack development with JavaScript, Angular, Node.js, and MySQL.
+Proficiency in API Gateway, Git, Docker, and Python.
+Strong problem-solving skills with a proven track record of identifying and fixing bugs to improve system performance.
+Experience optimizing code quality and performance using SonarQube or similar tools.
+Familiarity with serverless applications and cloud platforms like AWS.
+Solid understanding of web development best practices and agile methodologies.
+Nice to Have:
+
+AWS Certified Developer certification.
+Experience with Model Check for data accuracy and verification.
+Ability to design and implement reusable code components for scalable application development.
