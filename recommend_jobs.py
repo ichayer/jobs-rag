@@ -27,7 +27,6 @@ if __name__ == "__main__":
     # Ignore LanguageChain deprecated warnings
     warnings.filterwarnings("ignore")
 
-    # XXX: There's an issue with json formatting in the prompt that sometimes causes the app to fail
     # Load the CV text
     text = extract_text("cvs/CV-DESARROLLADOR.pdf")
 

@@ -82,10 +82,17 @@ class LLMHandler:
             ]
         }}"""
 
-    def extract_data(self, text):
+    # Sometimes the LLM model is not able to output correctly a JSON string
+    def extract_data(self, text, max_retries=7):
         prompt = self.create_prompt(text)
-        output = self.llm.invoke(prompt)
-        return json.loads(output)
+        for attempt in range(max_retries):
+            try:
+                output = self.llm.invoke(prompt)
+                return json.loads(output)
+            except json.JSONDecodeError as e:
+                if attempt < max_retries - 1:
+                    print(f"Attempt {attempt + 1}/{max_retries}: Failed to decode JSON. LLM output JSON is malformed.")
+        raise ValueError(f"Failed to decode JSON after {max_retries} attempts. LLM output JSON is malformed.")
 
     def prepare_query(self, applicant_profile):
         return f"""
@@ -110,8 +117,9 @@ class LLMHandler:
         4. Ensure all keys from the template are present in the output JSON.
         5. Format the output as a valid JSON string.
 
-        Output the filled JSON template only, without any additional text or explanations."""
-
+        Output the filled JSON template only, without any additional text or explanations.
+        Be precise and sure to follow JSON syntax and structure correctly.
+        """
 
     def compare_applicant_with_jobs(self, applicant_profile, job_descriptions_text):
         prompt = PromptTemplate(input_variables=["address", "city", "professional_experience", "education", "skills", "job_description"],
