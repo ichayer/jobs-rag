@@ -6,7 +6,7 @@ from pdfminer.high_level import extract_text
 from dotenv import load_dotenv, find_dotenv
 from indexing_pipeline.vector_db import VectorDatabase
 from indexing_pipeline.llm_handler import LLMHandler
-from metrics.scores import sort_jobs_by_score
+from utils.scores import sort_jobs_by_score
 
 
 if __name__ == "__main__":
