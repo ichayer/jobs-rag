@@ -8,8 +8,8 @@ class VectorDatabase:
     def __init__(self, index_name, pinecone_api_key):
         self.index_name = index_name
         self.pinecone_api_key = pinecone_api_key
-        self.vectorstore = self.__get_vector_store()
         self.embedding_size = 384
+        self.vectorstore = self.__get_vector_store()
 
     def __get_vector_store(self):
         embeddings = HuggingFaceEmbeddings(
