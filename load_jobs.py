@@ -7,8 +7,8 @@ from indexing_pipeline.document_loader import DocumentLoader
 from indexing_pipeline.vector_db import VectorDatabase
 
 if __name__ == "__main__":
-    if sys.version_info <= (3, 10):
-        raise Exception("This code is not compatible with Python 3.10 or higher")
+    if sys.version_info > (3, 10):
+        raise Exception("This code is not compatible with version of Python higher than 3.10")
 
     load_dotenv(find_dotenv())
 
