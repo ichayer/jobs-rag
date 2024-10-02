@@ -10,18 +10,24 @@ class LLMHandler:
 
     # Define a prompt template to compare the applicant's profile to the job description
     MATCH_APPLICATION_WITH_JOB_PROMPT = """
-    You are given the following applicant profile and job description. 
+    You are given the following applicant profile and job description.
     For each job description, I want you to:
 
-    1. Count how many skills from the applicant's profile match the skills required in the job description.
-    2. Count how many required skills are missing in the applicant's profile.
+    1. Count how many skills from the applicant's profile match the skills required in each job description.
+    2. Count how many required skills are missing in the applicant's profile for each job description.
     3. Check the applicant's previous jobs and count how many are relevant for the applied position.
     4. Check the applicant's education and count how many degrees match the job's education requirements.
-    5. Rate the location match from 0 to 5, where 0 means the location is too far away, and 4 means the applicant is in the same zone or can easily commute. 5 means the job is fully remote. If the job is hybrid or fully on site use the scale 1 to 4
+    5. Rate the location match from 0 to 4, where:
+        - 0 means the job location is more than 3 hours away from the applicant location
+        - 1 means the job location is between 3 and 1 hours away from the applicant location
+        - 2 means the job location is less 1 hour away from the applicant location
+        - 3 means the job is in the same location as the applicant location
+        - 4 means the job is fully remote. 
+        - If the job is hybrid or fully on site use the scale 1 to 3
     6. Retrieve de source of the job description so that it is identifiable. 
 
     Return the result in JSON format with the following fields:
-    - matching_skills 
+    - matching_skills
     - missing_skills
     - relevant_jobs
     - relevant_degrees
@@ -31,14 +37,16 @@ class LLMHandler:
     Applicant Profile:
     Address: {address}
     City: {city}
-    Professional Experience: {professional_experience} 
+    Professional Experience: {professional_experience}
     Skills: {skills}
     Education: {education}
 
-    Job Description:
+    Jobs Descriptions:
     {job_description}
+    
+    You should analyze as many jobs as the number of times that page_content appears in the description.
 
-    Just answer with a list of JSON files of the provided format and nothing else. No more extra text nor explanation, the output is aimed to be parsed as a valid json
+    Just answer with a list of JSON files of the provided format and nothing else. No more extra text nor explanation, the output is aimed to be parsed as a valid JSON.
 
     Example of a valid answer:
 
@@ -46,15 +54,15 @@ class LLMHandler:
     "matching_skills": 7,
     "missing_skills": 2,
     "relevant_jobs": 1,
-    "relevant_degrees": 0, 
-    "location_match": 4, 
+    "relevant_degrees": 0,
+    "location_match": 4,
     "source": "full-stack-developer.txt"
     }},
     {{
     "matching_skills": 6,
     "missing_skills": 3,
-    "relevant_jobs": 0, 
-    "relevant_degrees": 0, 
+    "relevant_jobs": 0,
+    "relevant_degrees": 0,
     "location_match": 5,
     "source": "software1.txt"
     }}]
@@ -89,9 +97,32 @@ class LLMHandler:
         prompt = self.create_prompt(text)
         return self.llm.invoke(prompt)
 
+    def __cut_off_json_excess(self, text):
+        start1 = text.find('{')
+        start2 = text.find('[')
+        end1 = text.rfind('}')
+        end2 = text.rfind(']')
+
+        if start1 != -1 and start2 != -1:
+            start = min(start1, start2)
+        else:
+            start = max(start1, start2)
+
+        if end1 != -1 and end2 != -1:
+            end = max(end1, end2)
+        else:
+            end = max(end1, end2)
+
+        if end != -1:
+            text = text[:end+1]
+        if start != -1:
+            text = text[start:]
+
+        return text
+
     def prepare_query(self, applicant_profile):
         return f"""
-            Professional Experience: {", ".join([exp['profile'] for exp in applicant_profile['professional_experience']])} 
+            Professional Experience: {", ".join([exp['profile'] for exp in applicant_profile['professional_experience']])}
             Skills: {", ".join(applicant_profile['skills'])}
             Education: {", ".join([edu['degree'] for edu in applicant_profile['education']])}
         """
@@ -106,7 +137,7 @@ class LLMHandler:
         {self.json_content}
 
         Instructions:
-        1. Carefully analyse the resume text.
+        1. Carefully analyze the resume text.
         2. Extract relevant information for each field in the JSON template.
         3. If a piece of information is not explicitly stated, make a reasonable inference based on the context.
         4. Ensure all keys from the template are present in the output JSON.
@@ -131,4 +162,6 @@ class LLMHandler:
         }
 
         chain = LLMChain(llm=self.llm, prompt=prompt)
-        return chain.run(inputs)
+        output = chain.run(inputs)
+        output = self.__cut_off_json_excess(output)
+        return output

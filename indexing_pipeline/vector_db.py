@@ -32,11 +32,23 @@ class VectorDatabase:
         return PineconeVectorStore(index_name=self.index_name, embedding=embeddings)
 
     def search(self, query, k=5):
-        return self.vectorstore.search(
+        retived_data = self.vectorstore.search(
             query=query,
             search_type="similarity_score_threshold",
             k=k
         )
+        output = ""
+
+        # Iterate over the list of Document objects
+        for index, document in enumerate(retived_data, start=1):
+            metadata = document.metadata
+            page_content = document.page_content
+
+            # Format the output string for each job description
+            output += f"- Job Description {index}: {page_content}\n"
+            output += f"  Source: {metadata.get('source', 'Unknown source')}\n\n"
+        return output
+
 
     def add_documents(self, documents):
         self.vectorstore.add_documents(documents)
