@@ -95,7 +95,8 @@ class LLMHandler:
     @llm_chain_retry(max_retries=7)
     def extract_data(self, text):
         prompt = self.create_prompt(text)
-        return self.llm.invoke(prompt)
+        output = self.llm.invoke(prompt)
+        return self.__cut_off_json_excess(output)
 
     def __cut_off_json_excess(self, text):
         start1 = text.find('{')
@@ -163,5 +164,4 @@ class LLMHandler:
 
         chain = LLMChain(llm=self.llm, prompt=prompt)
         output = chain.run(inputs)
-        output = self.__cut_off_json_excess(output)
-        return output
+        return self.__cut_off_json_excess(output)
