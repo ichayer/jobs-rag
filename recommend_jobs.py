@@ -11,6 +11,7 @@ if __name__ == "__main__":
         exit(1)
 
     best_match, sorted_jobs = RAG().run_with_scores(pdf_path=sys.argv[1], k=5)
-    print(f"Recommended job source: {best_match['source']} with a final score of {best_match['final_score']:.2f}")
-    for result in sorted_jobs:
-        print(f"Source: {result['source']}, Final Score: {result['final_score']:.2f}")
+    print("----------------------------------------------------------------------------------------------------")
+    print(f"1 - Recommended job source: {best_match['source']} with a final score of {best_match['final_score']:.2f}")
+    for index, result in enumerate(sorted_jobs[1:], start=2):
+        print(f"{index} - Source: {result['source']}, final Score: {result['final_score']:.2f}")

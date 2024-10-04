@@ -9,8 +9,8 @@ def llm_chain_retry(max_retries):
         def wrapper(*args, **kwargs):
             for attempt in range(max_retries):
                 try:
-                    output = func(*args, **kwargs)
-                    return json.loads(output)
+                    output, raw_output = func(*args, **kwargs)
+                    return json.loads(output), raw_output
                 except json.JSONDecodeError:
                     if attempt < max_retries - 1:
                         print(f"Attempt {attempt + 1}/{max_retries}: Failed to decode JSON. LLM output JSON is malformed.")

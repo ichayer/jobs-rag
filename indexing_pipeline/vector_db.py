@@ -32,17 +32,24 @@ class VectorDatabase:
         return PineconeVectorStore(index_name=self.index_name, embedding=embeddings)
 
     def search(self, query, k=5):
+        print("----------------------------------------------------------------------------------------------------")
+        print(f"Retrieving top {k} similar documents from Pinecone... ", end='', flush=True)
         retived_data = self.vectorstore.search(
             query=query,
             search_type="similarity_score_threshold",
             k=k
         )
+        print(f"✅")
+
         output = ""
+        print("Retrieved documents:")
 
         # Iterate over the list of Document objects
         for index, document in enumerate(retived_data, start=1):
             metadata = document.metadata
             page_content = document.page_content
+
+            print(f"- Job #{index}: {metadata.get('source', 'Unknown source')}")
 
             # Format the output string for each job description
             output += f"- Job Description {index}: {page_content}\n"

@@ -40,18 +40,20 @@ class RAG:
         self.llm_handler = LLMHandler()
         self.vector_db = VectorDatabase(index_name=self.env_vars["INDEX_NAME"], pinecone_api_key=self.env_vars["PINECONE_API_KEY"])
 
-    def __extract_text(self, pdf_path):
-        """
-        Extracts text from the applicant's profile (PDF)
-        """
-        return extract_text(pdf_file=pdf_path)
-
     def __process_applicant_profile(self, pdf_path):
         """
         Processes the text from the applicant profile to extract relevant data using the LLMHandler.
         """
-        text = self.__extract_text(pdf_path=pdf_path)
-        return self.llm_handler.extract_data(text=text)
+        print("----------------------------------------------------------------------------------------------------")
+        print("Processing applicant profile...")
+        print("Extracting text from PDF file... ", end='', flush=True)
+        text = extract_text(pdf_file=pdf_path)
+        print("✅")
+        print("Interpreting profile text with LLM... ", end='', flush=True)
+        applicant_profile, raw_output = self.llm_handler.extract_data(text=text)
+        print("✅")
+        print(f"Raw model output:\n========START MODEL OUTPUT========\n{raw_output}\n=========END MODEL OUTPUT=========")
+        return applicant_profile
 
     def __prepare_query(self, applicant_profile):
         """
@@ -105,7 +107,9 @@ class RAG:
         :param k: The number of job descriptions to retrieve.
         """
         applicant_profile, applicant_query, search_results = self.run(k=k, pdf_path=pdf_path)
-        comparison_result = self.llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=search_results)
+        comparison_result, raw_output = self.llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=search_results)
+        print("----------------------------------------------------------------------------------------------------")
+        print(f"Raw model output:\n========START MODEL OUTPUT========\n{raw_output}\n=========END MODEL OUTPUT=========")
         sorted_jobs = self.__sort_jobs_by_score(jobs=comparison_result)
         best_match = sorted_jobs[0]
         return best_match, sorted_jobs

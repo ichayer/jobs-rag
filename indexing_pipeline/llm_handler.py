@@ -96,7 +96,7 @@ class LLMHandler:
     def extract_data(self, text):
         prompt = self.create_prompt(text)
         output = self.llm.invoke(prompt)
-        return self.__cut_off_json_excess(output)
+        return self.__cut_off_json_excess(output), output
 
     def __cut_off_json_excess(self, text):
         start1 = text.find('{')
@@ -164,4 +164,4 @@ class LLMHandler:
 
         chain = LLMChain(llm=self.llm, prompt=prompt)
         output = chain.run(inputs)
-        return self.__cut_off_json_excess(output)
+        return self.__cut_off_json_excess(output), output
