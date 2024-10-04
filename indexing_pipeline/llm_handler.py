@@ -123,9 +123,9 @@ class LLMHandler:
 
     def prepare_query(self, applicant_profile):
         return f"""
-            Professional Experience: {", ".join([exp['profile'] for exp in applicant_profile['professional_experience']])}
-            Skills: {", ".join(applicant_profile['skills'])}
-            Education: {", ".join([edu['degree'] for edu in applicant_profile['education']])}
+            For this job is usefully to have done this previous jobs: {", ".join([exp['profile'] for exp in applicant_profile['professional_experience']])}
+            And also the following skills are valuable: {", ".join(applicant_profile['skills'])}
+            The required tasks align with this degrees: {", ".join([edu['degree'] for edu in applicant_profile['education']])}
         """
 
     def create_prompt(self, text):
