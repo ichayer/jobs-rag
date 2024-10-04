@@ -49,22 +49,25 @@ class RAG:
         print("Extracting text from PDF file... ", end='', flush=True)
         text = extract_text(pdf_file=pdf_path)
         print("✅")
-        print("Interpreting profile text with LLM... ", end='', flush=True)
+        print("Interpreting profile text with LLM")
         applicant_profile, raw_output = self.llm_handler.extract_data(text=text)
-        print("✅")
-        print(f"Raw model output:\n========START MODEL OUTPUT========\n{raw_output}\n=========END MODEL OUTPUT=========")
         return applicant_profile
 
     def __prepare_query(self, applicant_profile):
         """
         Prepares a query based on the applicant's profile data.
         """
-        return self.llm_handler.prepare_query(applicant_profile=applicant_profile)
+        print("----------------------------------------------------------------------------------------------------")
+        query = self.llm_handler.prepare_query(applicant_profile=applicant_profile)
+        print("Prepared query for Pinecone database:")
+        print(f"=== START OF QUERY ===\n{query}\n==== END OF QUERY ====")
+        return query
 
     def __search_jobs(self, query, k):
         """
         Search for job descriptions based on the applicant's query using the vector database.
         """
+        print("----------------------------------------------------------------------------------------------------")
         return self.vector_db.search(query=query, k=k)
 
     def __calculate_job_score(self, job):
@@ -108,8 +111,6 @@ class RAG:
         """
         applicant_profile, applicant_query, search_results = self.run(k=k, pdf_path=pdf_path)
         comparison_result, raw_output = self.llm_handler.compare_applicant_with_jobs(applicant_profile=applicant_profile, job_descriptions_text=search_results)
-        print("----------------------------------------------------------------------------------------------------")
-        print(f"Raw model output:\n========START MODEL OUTPUT========\n{raw_output}\n=========END MODEL OUTPUT=========")
         sorted_jobs = self.__sort_jobs_by_score(jobs=comparison_result)
         best_match = sorted_jobs[0]
         return best_match, sorted_jobs

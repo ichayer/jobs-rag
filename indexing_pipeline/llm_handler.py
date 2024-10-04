@@ -95,7 +95,10 @@ class LLMHandler:
     @llm_chain_retry(max_retries=7)
     def extract_data(self, text):
         prompt = self.create_prompt(text)
+        print("Running LLM... ", end='', flush=True)
         output = self.llm.invoke(prompt)
+        print("✅")
+        print(f"Raw model output:\n========START MODEL OUTPUT========\n{output}\n=========END MODEL OUTPUT=========")
         return self.__cut_off_json_excess(output), output
 
     def __cut_off_json_excess(self, text):
@@ -162,6 +165,10 @@ class LLMHandler:
             "job_description": job_descriptions_text
         }
 
+        print("----------------------------------------------------------------------------------------------------")
+        print("Running LLM... ", end='', flush=True)
         chain = LLMChain(llm=self.llm, prompt=prompt)
         output = chain.run(inputs)
+        print("✅")
+        print(f"Raw model output:\n========START MODEL OUTPUT========\n{output}\n=========END MODEL OUTPUT=========")
         return self.__cut_off_json_excess(output), output

@@ -38,7 +38,6 @@ class VectorDatabase:
         return PineconeVectorStore(index_name=self.index_name, embedding=embeddings)
 
     def search(self, query, k=5):
-        print("----------------------------------------------------------------------------------------------------")
         print(f"Retrieving top {k} similar documents from Pinecone... ", end='', flush=True)
         retived_data = self.vectorstore.search(
             query=query,
