@@ -15,7 +15,7 @@ def plot_ranking_comparison(expected_indices, expected_positions, retrieved_indi
     fig, ax = plt.subplots()
 
     ax.plot(expected_indices, expected_positions, marker='o', color='blue', label='Expected')
-    ax.plot(retrieved_indices, retrieved_positions, marker='x', color='orange', label='Returned by RAG')
+    ax.plot(retrieved_indices, retrieved_positions, marker='x', color='orange', label='Returned by pinecone')
 
     ax.set_xlabel('Ranking')
     ax.set_ylabel('Job')
@@ -28,7 +28,7 @@ def plot_ranking_comparison(expected_indices, expected_positions, retrieved_indi
     plt.tight_layout()
     plt.show()
 
-def compare_rag_results(retrieved_jobs, expected_jobs):
+def compare_pinecone_results(retrieved_jobs, expected_jobs):
     unique_job_labels = sorted(list(set(expected_jobs) | set(retrieved_jobs)), key=lambda x: expected_jobs.index(x) if x in expected_jobs else float('inf'))
 
     expected_job_positions = [unique_job_labels.index(job) + 1 for job in expected_jobs]
@@ -44,12 +44,12 @@ if __name__ == "__main__":
     check_python_version()
     suppress_warnings()
 
-    best_match, sorted_jobs = RAG().run_with_scores(pdf_path="../cvs/junior-full-stack-developer-resume-example.pdf", k=5)
+    best_match, sorted_jobs = RAG().run_with_scores(pdf_path="../cvs/backend-developer.pdf", k=4)
     retrieved_jobs = [job['source'].split('.')[0] for job in sorted_jobs]
 
-    expected_jobs = ["full-stack-developer", "backend-developer", "game-developer"]
+    expected_jobs = ["game-developer", "backend-developer", "full-stack-developer", "frontend-developer"]
     expected_ranking_indices, expected_job_positions, retrieved_ranking_indices, retrieved_job_positions, unique_job_labels = \
-        compare_rag_results(retrieved_jobs, expected_jobs)
+        compare_pinecone_results(retrieved_jobs, expected_jobs)
 
     pearson_corr = calculate_pearson(expected_job_positions, retrieved_job_positions)
 
@@ -61,14 +61,14 @@ if __name__ == "__main__":
 
     print("|{:^50}|".format("Ranking Comparison"))
     print("+" + "-" * 50 + "+")
-    print("|{:<25}| {:<22}|".format("Expected Order", "RAG Retrieved Order"))
+    print("|{:<25}| {:<22}|".format("Expected Order", "Pinecone Retrieved Order"))
     for expected, retrieved in zip(expected_jobs, retrieved_jobs):
         print("|{:<25}| {:<22}|".format(expected, retrieved))
 
     print("+" + "-" * 50 + "+")
     print("|{:^50}|".format("Position Comparison"))
     print("+" + "-" * 50 + "+")
-    print("|{:<25}| {:<22}|".format("Expected Positions", "RAG Positions"))
+    print("|{:<25}| {:<22}|".format("Expected Positions", "Pinecone Positions"))
     for expected_pos, retrieved_pos in zip(expected_job_positions, retrieved_job_positions):
         print("|{:<25}| {:<22}|".format(expected_pos, retrieved_pos))
 

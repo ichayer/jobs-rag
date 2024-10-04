@@ -8,9 +8,9 @@ def calculate_metrics(expected_output, search_results_source):
     false_positives = sum([1 for source in search_results_source if source not in expected_output])
     false_negatives = sum([1 for source in expected_output if source not in search_results_source])
 
-    precision = true_positives / (true_positives + false_positives)
-    recall = true_positives / (true_positives + false_negatives)
-    f1_score = (2 * precision * recall) / (precision + recall)
+    precision = true_positives / (true_positives + false_positives) if true_positives + false_positives > 0 else 0
+    recall = true_positives / (true_positives + false_negatives) if true_positives + false_negatives > 0 else 0
+    f1_score = (2 * precision * recall) / (precision + recall) if precision + recall > 0 else 0
 
     return precision, recall, f1_score
 
@@ -38,9 +38,9 @@ if __name__ == "__main__":
     check_python_version()
     suppress_warnings()
 
-    _, _, search_results = RAG().run(pdf_path="../cvs/junior-full-stack-developer-resume-example.pdf", k=5)
+    _, _, search_results = RAG().run(pdf_path="../cvs/backend-developer.pdf", k=4)
 
-    expected_output = ["full-stack-developer.txt"]
+    expected_output = ["game-developer.txt", "backend-developer.txt", "full-stack-developer.txt", "frontend-developer.txt"]
     search_results_source = [result.split("Source: ")[1].split("\n")[0] for result in search_results.split("\n\n") if "Source:" in result]
 
     precision, recall, f1_score = calculate_metrics(expected_output, search_results_source)
