@@ -12,13 +12,16 @@ class VectorDatabase:
         self.vectorstore = self.__get_vector_store()
 
     def __get_vector_store(self):
+        print("Initializing Pinecone... ", end='', flush=True)
         embeddings = HuggingFaceEmbeddings(
             model_name='sentence-transformers/all-MiniLM-L6-v2',
             model_kwargs={'device': os.environ["COMPUTE_DEVICE"]}
         )
         pc = Pinecone(api_key=self.pinecone_api_key)
+        print("✅")
 
         if self.index_name not in pc.list_indexes().names():
+            print(f"Creating Pinecone index \"{self.index_name}\"... ", end='', flush=True)
             pc.create_index(
                 name=self.index_name,
                 dimension=self.embedding_size,
@@ -28,6 +31,9 @@ class VectorDatabase:
                     region='us-east-1'
                 )
             )
+            print("✅")
+        else:
+            print(f"Pinecone index \"{self.index_name}\" already exists ✅")
 
         return PineconeVectorStore(index_name=self.index_name, embedding=embeddings)
 

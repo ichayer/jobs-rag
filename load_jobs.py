@@ -11,6 +11,8 @@ if __name__ == "__main__":
     vector_store = VectorDatabase(index_name=env_vars["INDEX_NAME"], pinecone_api_key=env_vars["PINECONE_API_KEY"])
 
     job_descriptions = document_loader.load_job_descriptions()
+    print("Uploading to Pinecone...", end='', flush=True)
     vector_store.add_documents(job_descriptions)
+    print("✅")
 
-    print("Done!")
+    print("Ready for action 😎")

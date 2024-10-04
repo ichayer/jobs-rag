@@ -45,7 +45,7 @@ class RAG:
         Processes the text from the applicant profile to extract relevant data using the LLMHandler.
         """
         print("----------------------------------------------------------------------------------------------------")
-        print("Processing applicant profile...")
+        print("Processing applicant profile")
         print("Extracting text from PDF file... ", end='', flush=True)
         text = extract_text(pdf_file=pdf_path)
         print("✅")
