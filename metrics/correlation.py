@@ -25,6 +25,7 @@ def evaluate_rag_performance(retrieved_sorted_jobs_source, expected_ordered_outp
     ax.set_ylabel('Job')
     ax.set_yticks(list(range(1, len(y_labels) + 1)))
     ax.set_yticklabels(y_labels, fontsize=8)
+    ax.legend()
     # ax.set_title('Comparation between expected and retrieved jobs')
 
     plt.grid()
